@@ -1,3 +1,5 @@
+<img width="2112" height="1170" alt="image" src="https://github.com/user-attachments/assets/3940db8f-b119-42df-a3e1-b1a522dbfff3" />
+
 # CreatorPulse
 
 CreatorPulse 是一个面向影石全球达人营销场景的可解释决策原型。它把“产品能力—户外场景—本地受众—内容表达—转化结果”连接成闭环，帮助运营团队从候选达人中找到更可能引爆单品的人，并清楚回答“为什么推荐、证据是什么、还缺哪些数据”。
