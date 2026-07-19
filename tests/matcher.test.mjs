@@ -69,6 +69,28 @@ test("ranking prefers the exact scene match", () => {
   assert.equal(output.ranked[0].creator.creator_id, "TEST-1");
 });
 
+test("China market defaults to local-first candidates", () => {
+  const chinaCreator = {
+    ...baseCreator,
+    creator_id: "TEST-CN",
+    country: "CN",
+    language: "zh",
+    audience_primary_market: "CN",
+  };
+  const chinaCampaign = { ...campaign, market: "CN", language: "zh" };
+  const localFirst = rankCreators([baseCreator, chinaCreator], chinaCampaign, product);
+  assert.deepEqual(localFirst.ranked.map((item) => item.creator.creator_id), ["TEST-CN"]);
+  assert.match(localFirst.excluded[0].reasons.join(" "), /主要受众市场不匹配/);
+
+  const crossMarket = rankCreators(
+    [baseCreator, chinaCreator],
+    chinaCampaign,
+    product,
+    { requireMarketMatch: false },
+  );
+  assert.equal(crossMarket.ranked.length, 2, "audited cross-market experiments can opt in explicitly");
+});
+
 test("localized brief uses the target market language", () => {
   const result = scoreCreator(baseCreator, campaign, product);
   const brief = buildLocalizedBrief(result, campaign, product);
@@ -77,3 +99,25 @@ test("localized brief uses the target market language", () => {
   assert.equal(brief.shotPlan.length, 3);
 });
 
+test("China market produces a Chinese brief and localized compliance note", () => {
+  const chinaCreator = {
+    ...baseCreator,
+    creator_id: "TEST-CN",
+    country: "CN",
+    language: "zh",
+    audience_primary_market: "CN",
+    primary_scenario: "hiking",
+  };
+  const chinaCampaign = {
+    ...campaign,
+    market: "CN",
+    language: "zh",
+    scenario: "hiking",
+  };
+  const chinaProduct = { ...product, name: "Insta360 X5", scenarios: ["hiking", "travel"] };
+  const result = scoreCreator(chinaCreator, chinaCampaign, chinaProduct);
+  const brief = buildLocalizedBrief(result, chinaCampaign, chinaProduct);
+  assert.equal(brief.locale, "zh");
+  assert.match(brief.hook, /山野|视角/);
+  assert.match(brief.complianceNote, /个人信息授权|平台规则/);
+});
