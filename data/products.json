@@ -2,35 +2,46 @@
   {
     "product_id": "x5",
     "name": "Insta360 X5",
+    "brand": "Insta360",
+    "model": "X5",
     "category": "360-camera",
     "scenarios": ["solo-travel", "travel", "skiing", "diving", "motorcycle", "hiking"],
     "goals": ["awareness", "consideration", "conversion"],
     "markets": ["DE", "US", "JP", "GB", "FR", "AU"],
     "key_message": "用沉浸式视角记录完整户外体验",
     "asset": "../assets/insta360/insta360-x5-black.png",
+    "asset_type": "cutout",
+    "asset_position": "50% 50%",
     "source_note": "产品名称来自 Insta360 官方网站；场景标签为 MVP 演示标签。"
   },
   {
     "product_id": "ace-pro-2",
     "name": "Insta360 Ace Pro 2",
+    "brand": "Insta360",
+    "model": "Ace Pro 2",
     "category": "action-camera",
     "scenarios": ["night-cycling", "mountain-biking", "skiing", "motorcycle", "diving", "vlogging"],
     "goals": ["consideration", "conversion"],
     "markets": ["DE", "US", "JP", "GB", "FR", "AU"],
     "key_message": "在高强度运动场景中稳定完成内容表达",
     "asset": "../assets/insta360/insta360-ace-pro-2.jpg",
+    "asset_type": "scene",
+    "asset_position": "75% 50%",
     "source_note": "产品名称来自 Insta360 官方网站；场景标签为 MVP 演示标签。"
   },
   {
     "product_id": "go-ultra",
     "name": "Insta360 GO Ultra",
+    "brand": "Insta360",
+    "model": "GO Ultra",
     "category": "compact-camera",
     "scenarios": ["daily-vlog", "family-travel", "running", "city-travel", "hiking", "solo-travel"],
     "goals": ["awareness", "consideration", "conversion"],
     "markets": ["DE", "US", "JP", "GB", "FR", "KR"],
     "key_message": "以更轻的拍摄负担记录日常与旅行",
     "asset": "../assets/insta360/insta360-go-ultra.jpg",
+    "asset_type": "scene",
+    "asset_position": "70% 50%",
     "source_note": "产品名称来自 Insta360 官方网站；场景标签为 MVP 演示标签。"
   }
 ]
-

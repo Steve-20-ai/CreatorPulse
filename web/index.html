@@ -39,45 +39,58 @@
           <span class="live-dot">LIVE</span>
         </div>
 
-        <div class="product-stage">
+        <article id="productStage" class="product-stage product-stage--cutout">
           <div class="product-copy">
-            <span id="productCategory">360 CAMERA</span>
-            <strong id="productName">Insta360 X5</strong>
+            <div class="product-kicker">
+              <span id="productCategory">360 CAMERA</span>
+              <span class="asset-status">OFFICIAL ASSET</span>
+            </div>
+            <div class="product-title">
+              <span id="productBrand">Insta360</span>
+              <strong id="productName">X5</strong>
+            </div>
             <p id="productMessage">用沉浸式视角记录完整户外体验</p>
           </div>
-          <img id="productImage" src="../assets/insta360/insta360-x5-black.png" alt="Insta360 X5 官方产品图" />
-        </div>
+          <div class="product-art">
+            <img id="productImage" src="../assets/insta360/insta360-x5-black.png" alt="Insta360 X5 官方产品图" />
+          </div>
+        </article>
 
         <form id="campaignForm" class="brief-form">
-          <label>
-            <span>产品</span>
-            <select id="productSelect" name="product"></select>
-          </label>
-
-          <div class="field-row">
+          <fieldset class="form-group">
+            <legend><span>01</span>产品与市场</legend>
             <label>
-              <span>目标市场</span>
-              <select id="marketSelect" name="market"></select>
+              <span>产品</span>
+              <select id="productSelect" name="product"></select>
             </label>
+            <div class="field-row">
+              <label>
+                <span>目标市场</span>
+                <select id="marketSelect" name="market"></select>
+              </label>
+              <label>
+                <span>核心场景</span>
+                <select id="scenarioSelect" name="scenario"></select>
+              </label>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-group">
+            <legend><span>02</span>目标与预算</legend>
             <label>
-              <span>核心场景</span>
-              <select id="scenarioSelect" name="scenario"></select>
+              <span>营销目标</span>
+              <select id="goalSelect" name="goal">
+                <option value="awareness">新品认知</option>
+                <option value="consideration">内容种草</option>
+                <option value="conversion" selected>点击与转化</option>
+              </select>
             </label>
-          </div>
 
-          <label>
-            <span>营销目标</span>
-            <select id="goalSelect" name="goal">
-              <option value="awareness">新品认知</option>
-              <option value="consideration">内容种草</option>
-              <option value="conversion" selected>点击与转化</option>
-            </select>
-          </label>
-
-          <label>
-            <span>单达人预算 <output id="budgetOutput" for="budgetInput">$2,400</output></span>
-            <input id="budgetInput" name="budget" type="range" min="1000" max="4000" step="100" value="2400" />
-          </label>
+            <label>
+              <span>单达人预算 <output id="budgetOutput" for="budgetInput">$2,400</output></span>
+              <input id="budgetInput" name="budget" type="range" min="1000" max="4000" step="100" value="2400" />
+            </label>
+          </fieldset>
 
           <button id="runButton" class="primary-action" type="submit">
             <span>运行匹配</span>
@@ -86,7 +99,7 @@
         </form>
 
         <div class="constraint-note">
-          <span>约束</span>
+          <span>硬性约束</span>
           <p>品牌安全 ≥ 78% · 预算内 · 场景相关度 ≥ 35%</p>
         </div>
       </aside>
@@ -104,8 +117,8 @@
         </div>
 
         <div class="ranking-legend" aria-hidden="true">
-          <span>RANK / CREATOR</span>
-          <span>MATCH</span>
+          <span>排名 / 达人</span>
+          <span>匹配度</span>
         </div>
 
         <div id="rankingList" class="ranking-list" aria-live="polite">
@@ -173,4 +186,3 @@
     <script type="module" src="./app.js"></script>
   </body>
 </html>
-

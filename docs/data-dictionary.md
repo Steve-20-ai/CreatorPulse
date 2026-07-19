@@ -36,12 +36,16 @@
 |---|---|---|
 | `product_id` | string | 产品内部标识 |
 | `name` | string | 官方产品名称 |
+| `brand` | string | 页面中独立展示的品牌名 |
+| `model` | string | 页面中独立展示的产品型号 |
 | `category` | string | 产品类别 |
 | `scenarios` | string[] | MVP 演示场景标签 |
 | `goals` | string[] | 支持的营销目标 |
 | `markets` | string[] | 演示市场 |
 | `key_message` | string | 演示用内容方向，不代表官方完整规格 |
 | `asset` | path | 本地官方产品素材路径 |
+| `asset_type` | enum | `cutout` 为独立产品图，`scene` 为场景图 |
+| `asset_position` | CSS position | 场景图响应式裁切的视觉焦点 |
 | `source_note` | string | 来源与边界说明 |
 
 ## 数据质量策略
@@ -49,4 +53,3 @@
 - 缺失字段不会被填入虚构值，而是降低推荐置信度。
 - 合成数据的置信度上限低于生产授权数据。
 - 生产环境中的个人数据需满足目的限定、最小必要、留存期限和访问审计要求。
-

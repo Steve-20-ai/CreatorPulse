@@ -20,7 +20,11 @@ test("official product names have local assets and demo source notes", () => {
     "Insta360 GO Ultra",
   ]);
   for (const product of products) {
+    assert.equal(product.brand, "Insta360");
+    assert.ok(product.model);
     assert.match(product.asset, /^\.\.\/assets\/insta360\//);
+    assert.match(product.asset_type, /^(cutout|scene)$/);
+    assert.match(product.asset_position, /^\d+% \d+%$/);
     assert.match(product.source_note, /MVP/);
   }
 });
@@ -39,4 +43,3 @@ test("every product scenario can be ranked without an exception", () => {
     }
   }
 });
-
