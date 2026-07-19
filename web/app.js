@@ -33,8 +33,9 @@ const elements = {
   scenario: $("#scenarioSelect"), goal: $("#goalSelect"), budget: $("#budgetInput"),
   budgetOutput: $("#budgetOutput"), run: $("#runButton"), ranking: $("#rankingList"),
   matchCount: $("#matchCount"), excludedCount: $("#excludedCount"), excludedReason: $("#excludedReason"),
-  confidence: $("#confidenceValue"), detail: $("#detailContent"), productName: $("#productName"),
-  productCategory: $("#productCategory"), productMessage: $("#productMessage"), productImage: $("#productImage"),
+  confidence: $("#confidenceValue"), detail: $("#detailContent"), productStage: $("#productStage"),
+  productBrand: $("#productBrand"), productName: $("#productName"), productCategory: $("#productCategory"),
+  productMessage: $("#productMessage"), productImage: $("#productImage"),
   tabs: [...document.querySelectorAll(".tab-button")], tweaksToggle: $("#tweaksToggle"),
   tweaksPanel: $("#tweaksPanel"), density: $("#densitySelect"), contrast: $("#contrastToggle"),
   toast: $("#toast"),
@@ -79,11 +80,15 @@ function updateProduct() {
   const product = selectedProduct();
   fillSelect(elements.market, product.markets, (item) => item, (item) => MARKET_LABELS[item] ?? item, "DE");
   fillSelect(elements.scenario, product.scenarios, (item) => item, (item) => SCENARIO_LABELS[item] ?? item, product.scenarios[0]);
-  elements.productName.textContent = product.name;
+  elements.productBrand.textContent = product.brand ?? "Insta360";
+  elements.productName.textContent = product.model ?? product.name.replace(/^Insta360\s+/, "");
   elements.productCategory.textContent = product.category.replaceAll("-", " ").toUpperCase();
   elements.productMessage.textContent = product.key_message;
   elements.productImage.src = product.asset;
   elements.productImage.alt = `${product.name} 官方产品图`;
+  elements.productStage.classList.toggle("product-stage--scene", product.asset_type === "scene");
+  elements.productStage.classList.toggle("product-stage--cutout", product.asset_type !== "scene");
+  elements.productStage.style.setProperty("--asset-position", product.asset_position ?? "50% 50%");
 }
 
 function updateBudget() {
@@ -129,13 +134,15 @@ function renderRanking() {
   if (!visible.some((item) => item.creator.creator_id === state.selectedId)) state.selectedId = visible[0].creator.creator_id;
   elements.ranking.innerHTML = visible.map((item) => {
     const selected = item.creator.creator_id === state.selectedId;
-    return `<button class="creator-card${selected ? " is-selected" : ""}" type="button" data-creator-id="${escapeHtml(item.creator.creator_id)}" aria-pressed="${selected}">
-      <span class="rank-number">${String(item.rank).padStart(2, "0")}</span>
+    const scenario = SCENARIO_LABELS[item.creator.primary_scenario] ?? item.creator.primary_scenario;
+    const matchTags = [...new Set([item.reasons[0]?.label ?? "综合匹配", scenario, "预算内"])];
+    return `<button class="creator-card${item.rank === 1 ? " is-top-match" : ""}${selected ? " is-selected" : ""}" type="button" data-creator-id="${escapeHtml(item.creator.creator_id)}" aria-pressed="${selected}">
+      <span class="rank-column"><span class="rank-number">${String(item.rank).padStart(2, "0")}</span>${item.rank === 1 ? '<span class="top-match-badge">TOP</span>' : ""}</span>
       <span class="creator-main"><strong>${escapeHtml(item.creator.display_name)}</strong>
         <span class="creator-meta"><span>${escapeHtml(item.creator.platform)}</span><span>${escapeHtml(item.creator.country)}</span><span>${compact(item.creator.avg_views)} avg.</span></span>
-        <span class="reason-line">${escapeHtml(item.reasons[0]?.label ?? "综合匹配")} · ${escapeHtml(SCENARIO_LABELS[item.creator.primary_scenario] ?? item.creator.primary_scenario)}</span>
+        <span class="match-tags">${matchTags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}</span>
       </span>
-      <span class="score-block"><strong>${item.score}</strong><span>MATCH</span><span class="score-bar"><i style="width:${item.score}%"></i></span></span>
+      <span class="score-block"><strong>${item.score}</strong><span>匹配度</span><span class="score-bar"><i style="width:${item.score}%"></i></span></span>
     </button>`;
   }).join("");
 
@@ -168,12 +175,21 @@ function renderDetail() {
 
 function renderEvidence(selected) {
   const creator = selected.creator;
+  const currentCampaign = campaign();
+  const decisionSteps = [
+    ["01", "投放约束", `${MARKET_LABELS[currentCampaign.market] ?? currentCampaign.market} · ${money(currentCampaign.budgetPerCreator)}`],
+    ["02", "场景与受众", `${SCENARIO_LABELS[currentCampaign.scenario] ?? currentCampaign.scenario} · 受众 ${percent(creator.audience_market_share)}`],
+    ["03", "风险门槛", `品牌安全 ${percent(creator.brand_safety)}`],
+    ["04", "推荐结果", `${selected.score} / 100`],
+  ];
+  const decisionPath = decisionSteps.map(([step, label, value]) => `<div class="decision-step"><span>${step}</span><strong>${escapeHtml(label)}</strong><small>${escapeHtml(value)}</small></div>`).join("");
   const reasons = selected.reasons.map((reason) => `<div class="reason-card"><span>${escapeHtml(reason.label)}</span><strong>${Math.round(reason.value * 100)}</strong><div class="mini-bar"><i style="width:${Math.round(reason.value * 100)}%"></i></div></div>`).join("");
   const evidence = selected.evidence.map((item) => `<article class="evidence-card"><div class="evidence-title-row"><strong>${escapeHtml(item.title)}</strong><span>${Math.round(item.strength * 100)} / 100</span></div><p>${escapeHtml(item.text)}</p></article>`).join("");
   const gaps = selected.dataGaps.length ? selected.dataGaps.join("；") : "未检测到关键字段缺口";
-  elements.detail.innerHTML = `<div class="creator-profile"><div><h3>${escapeHtml(creator.display_name)}</h3><p>${escapeHtml(creator.handle)} · ${escapeHtml(creator.platform)} · ${escapeHtml(creator.content_style)}</p></div><div class="profile-score"><strong>${selected.score}</strong><span>OVERALL MATCH</span></div></div>
-    <div class="reason-grid">${reasons}</div><span class="section-label">Evidence chain</span><div class="evidence-stack">${evidence}</div>
-    <span class="section-label">Data gaps</span><div class="gap-card">${escapeHtml(gaps)}</div>`;
+  elements.detail.innerHTML = `<div class="creator-profile"><div><span class="profile-kicker">TOP RECOMMENDATION</span><h3>${escapeHtml(creator.display_name)}</h3><p>${escapeHtml(creator.handle)} · ${escapeHtml(creator.platform)} · ${escapeHtml(creator.content_style)}</p></div><div class="profile-score"><strong>${selected.score}</strong><span>综合匹配度</span></div></div>
+    <span class="section-label">决策路径</span><div class="decision-path">${decisionPath}</div>
+    <span class="section-label">推荐依据</span><div class="reason-grid">${reasons}</div><span class="section-label">推荐证据</span><div class="evidence-stack">${evidence}</div>
+    <span class="section-label">数据缺口</span><div class="gap-card">${escapeHtml(gaps)}</div>`;
 }
 
 function renderContent(selected) {
@@ -246,4 +262,3 @@ function initialize() {
 }
 
 initialize();
-
