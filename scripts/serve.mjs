@@ -16,7 +16,7 @@ const mimeTypes = {
   ".svg": "image/svg+xml",
 };
 
-const server = createServer((request, response) => {
+function handleRequest(request, response) {
   const requestPath = decodeURIComponent((request.url || "/").split("?")[0]);
   const relativePath = requestPath === "/" ? "web/index.html" : requestPath.endsWith("/") ? requestPath.replace(/^\/+/, "") + "index.html" : requestPath.replace(/^\/+/, "");
   const resolved = normalize(join(root, relativePath));
@@ -32,11 +32,32 @@ const server = createServer((request, response) => {
     "Cache-Control": "no-store",
   });
   createReadStream(resolved).pipe(response);
-});
+}
 
-server.listen(port, "127.0.0.1", () => {
-  console.log(`CreatorPulse is running at http://localhost:${port}/web/`);
-});
+const listenerOptions = process.env.HOST
+  ? [{ host: process.env.HOST }]
+  : [
+      { host: "127.0.0.1" },
+      { host: "::1", ipv6Only: true },
+    ];
+
+let announced = false;
+for (const options of listenerOptions) {
+  const server = createServer(handleRequest);
+  server.on("error", (error) => {
+    if (options.host === "::1" && ["EAFNOSUPPORT", "EADDRNOTAVAIL"].includes(error.code)) {
+      console.warn("IPv6 localhost is unavailable; continuing with IPv4 localhost.");
+      return;
+    }
+    throw error;
+  });
+  server.listen({ port, ...options }, () => {
+    if (!announced) {
+      announced = true;
+      console.log(`CreatorPulse is running at http://localhost:${port}/web/`);
+    }
+  });
+}
 
 
 
