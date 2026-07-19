@@ -1,0 +1,20 @@
+creator_id,handle,display_name,platform,country,language,audience_primary_market,audience_market_share,primary_scenario,secondary_scenarios,content_style,follower_count,avg_views,engagement_rate,completion_rate,click_rate,conversion_rate,rate_usd,delivery_reliability,brand_safety,content_quality,evidence_summary,is_synthetic
+CR001,@lena_nightride_demo,Lena Night Ride,YouTube,DE,de,DE,0.62,night-cycling,urban-cycling|technology,technical-first-person,184000,128000,0.087,0.64,0.055,0.024,1450,0.94,0.97,0.91,近90天夜骑主题占比高；德国受众集中；评论高频讨论低光与防抖,true
+CR002,@alpine_motion_demo,Alpine Motion,Instagram,DE,de,DE,0.46,skiing,hiking|snowboarding,cinematic-field-test,265000,176000,0.071,0.58,0.041,0.018,1900,0.91,0.96,0.89,雪地实测内容稳定；受众重视可靠性与装备对比,true
+CR003,@tokyo_trail_demo,Tokyo Trail,YouTube,JP,ja,JP,0.58,hiking,solo-travel|city-travel,calm-storytelling,212000,153000,0.079,0.68,0.047,0.021,1680,0.96,0.98,0.93,日本本地受众集中；长视频完播较高；擅长轻量旅行叙事,true
+CR004,@osaka_ride_demo,Osaka Ride,TikTok,JP,ja,JP,0.49,urban-cycling,night-cycling|daily-vlog,fast-cut-pov,338000,214000,0.094,0.71,0.061,0.027,2050,0.90,0.95,0.90,第一视角短视频表现突出；夜间城市骑行内容互动高,true
+CR005,@pacific_pov_demo,Pacific POV,Instagram,US,en,US,0.64,surfing,diving|travel,immersive-action,481000,286000,0.082,0.62,0.052,0.023,3200,0.92,0.94,0.92,水上运动内容密度高；美国受众占比稳定；视觉冲击强,true
+CR006,@ridge_runner_demo,Ridge Runner,YouTube,US,en,US,0.59,hiking,mountain-biking|climbing,gear-review,356000,241000,0.069,0.57,0.049,0.026,2700,0.97,0.99,0.95,装备评测可信度高；评论包含大量购买意向问题,true
+CR007,@london_gear_lab_demo,London Gear Lab,YouTube,GB,en,GB,0.57,vlogging,cycling|technology,structured-review,292000,204000,0.064,0.61,0.045,0.020,2300,0.98,0.99,0.94,结构化评测便于解释产品能力；履约历史稳定,true
+CR008,@nordic_snow_demo,Nordic Snow,Instagram,SE,sv,DE,0.31,skiing,snowboarding|hiking,cinematic-minimal,198000,142000,0.088,0.66,0.039,0.016,1550,0.89,0.97,0.90,德国跨境受众可观；雪地画面质量高；转化数据较少,true
+CR009,@urban_frame_fr_demo,Urban Frame FR,TikTok,FR,fr,FR,0.52,city-travel,running|daily-vlog,editorial-short-form,421000,267000,0.091,0.69,0.050,0.019,2400,0.93,0.96,0.91,城市旅行主题稳定；短视频收藏率和完播率较高,true
+CR010,@maple_adventure_demo,Maple Adventure,YouTube,CA,en,US,0.44,hiking,winter-sports|family-travel,warm-documentary,174000,116000,0.073,0.63,0.042,0.022,1350,0.95,0.99,0.88,北美受众覆盖；家庭户外内容具有较强信任感,true
+CR011,@coastline_motion_demo,Coastline Motion,Instagram,AU,en,AU,0.56,diving,surfing|travel,cinematic-action,309000,221000,0.086,0.65,0.053,0.021,2450,0.92,0.96,0.93,潜水与冲浪内容长期稳定；画面表现力高,true
+CR012,@iberia_moto_demo,Iberia Moto,YouTube,ES,es,ES,0.54,motorcycle,road-trip|technology,long-form-review,247000,169000,0.067,0.59,0.048,0.025,1850,0.94,0.97,0.92,摩旅评测兼顾故事与参数；受众购买意向明确,true
+CR013,@berlin_commute_demo,Berlin Commute,TikTok,DE,de,DE,0.68,urban-cycling,night-cycling|technology,practical-short-form,156000,109000,0.102,0.74,0.064,0.030,1180,0.96,0.98,0.89,德国本地受众高度集中；夜骑短视频点击与完播均较强,true
+CR014,@kyoto_pocket_demo,Kyoto Pocket Stories,Instagram,JP,ja,JP,0.61,family-travel,daily-vlog|city-travel,gentle-lifestyle,229000,161000,0.085,0.70,0.046,0.020,1720,0.97,0.99,0.94,家庭旅行与日常记录结合；内容自然且品牌安全度高,true
+CR015,@colorado_action_demo,Colorado Action,TikTok,US,en,US,0.67,mountain-biking,skiing|night-cycling,high-energy-pov,517000,349000,0.096,0.72,0.058,0.026,3600,0.88,0.91,0.90,高强度运动内容传播力强；成本和风险需要额外评估,true
+CR016,@seoul_daylight_demo,Seoul Daylight,Instagram,KR,ko,KR,0.57,city-travel,daily-vlog|running,clean-lifestyle,386000,252000,0.083,0.67,0.049,0.020,2250,0.95,0.98,0.93,城市日常内容审美稳定；韩国本地受众集中,true
+CR017,@paris_solo_demo,Paris Solo Travel,YouTube,FR,fr,FR,0.60,solo-travel,city-travel|daily-vlog,personal-storytelling,318000,226000,0.075,0.64,0.051,0.024,2350,0.96,0.98,0.95,单人旅行叙事自然；评论中真实使用问题较多,true
+CR018,@munich_trail_lab_demo,Munich Trail Lab,YouTube,DE,de,DE,0.53,hiking,mountain-biking|technology,evidence-led-review,203000,148000,0.076,0.62,0.056,0.029,1600,0.99,0.99,0.96,德国户外受众稳定；评测重视证据与可复现测试,true
+
