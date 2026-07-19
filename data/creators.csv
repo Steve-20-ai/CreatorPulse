@@ -17,4 +17,15 @@ CR015,@colorado_action_demo,Colorado Action,TikTok,US,en,US,0.67,mountain-biking
 CR016,@seoul_daylight_demo,Seoul Daylight,Instagram,KR,ko,KR,0.57,city-travel,daily-vlog|running,clean-lifestyle,386000,252000,0.083,0.67,0.049,0.020,2250,0.95,0.98,0.93,城市日常内容审美稳定；韩国本地受众集中,true
 CR017,@paris_solo_demo,Paris Solo Travel,YouTube,FR,fr,FR,0.60,solo-travel,city-travel|daily-vlog,personal-storytelling,318000,226000,0.075,0.64,0.051,0.024,2350,0.96,0.98,0.95,单人旅行叙事自然；评论中真实使用问题较多,true
 CR018,@munich_trail_lab_demo,Munich Trail Lab,YouTube,DE,de,DE,0.53,hiking,mountain-biking|technology,evidence-led-review,203000,148000,0.076,0.62,0.056,0.029,1600,0.99,0.99,0.96,德国户外受众稳定；评测重视证据与可复现测试,true
-
+CR019,@shanghai_nightride_demo,上海夜行实验室,Douyin,CN,zh,CN,0.74,night-cycling,urban-cycling|running,fast-cut-field-test,412000,286000,0.098,0.73,0.061,0.028,1850,0.94,0.98,0.92,中国城市夜骑受众集中；短视频完播和互动表现较强；数据为合成演示,true
+CR020,@yunnan_trail_notes_demo,云南轻装笔记,Xiaohongshu,CN,zh,CN,0.69,hiking,solo-travel|travel,field-note-storytelling,268000,172000,0.084,0.68,0.052,0.024,1600,0.97,0.99,0.94,轻量徒步与独行旅行内容稳定；种草表达自然；数据为合成演示,true
+CR021,@snowline_visual_lab_demo,雪线影像实验室,Bilibili,CN,zh,CN,0.71,skiing,mountain-biking|snowboarding,evidence-led-long-form,326000,238000,0.081,0.66,0.047,0.023,2100,0.96,0.98,0.95,雪地与山地实测内容完整；长视频强调可复现证据；数据为合成演示,true
+CR022,@shenzhen_camera_lab_demo,深圳影像拆解,Bilibili,CN,zh,CN,0.78,vlogging,technology|daily-vlog,structured-tech-review,539000,367000,0.076,0.64,0.058,0.031,2350,0.98,0.99,0.96,影像产品结构化评测清晰；中国科技受众占比较高；数据为合成演示,true
+CR023,@island_diveview_demo,海岛潜摄日记,Douyin,CN,zh,CN,0.66,diving,motorcycle|surfing,immersive-action,447000,312000,0.091,0.70,0.057,0.026,2300,0.92,0.97,0.93,潜水和运动第一视角内容密集；画面冲击力较强；数据为合成演示,true
+CR024,@city_family_lens_demo,城市亲子镜头,Xiaohongshu,CN,zh,CN,0.76,family-travel,city-travel|daily-vlog,warm-lifestyle,301000,196000,0.089,0.72,0.054,0.025,1750,0.98,0.99,0.95,亲子旅行与城市日常内容稳定；品牌安全度较高；数据为合成演示,true
+CR025,@sichuan_roadlog_demo,川西摩旅档案,Douyin,CN,zh,CN,0.73,motorcycle,travel|night-cycling,road-trip-pov,384000,271000,0.093,0.71,0.060,0.028,2050,0.95,0.98,0.93,摩旅路线与第一视角记录稳定；公路场景叙事连贯；数据为合成演示,true
+CR026,@weekend_family_route_demo,周末亲子路线,Xiaohongshu,CN,zh,CN,0.79,family-travel,city-travel|daily-vlog,practical-family-guide,356000,214000,0.091,0.74,0.056,0.027,1800,0.98,0.99,0.95,亲子周末路线与轻量拍摄教程清晰；收藏互动稳定；数据为合成演示,true
+CR027,@city_runner_frame_demo,城市跑者镜头,Douyin,CN,zh,CN,0.72,running,night-cycling|city-travel,first-person-training-log,291000,207000,0.096,0.75,0.059,0.027,1700,0.96,0.98,0.92,城市跑步和夜间训练内容集中；运动镜头节奏明确；数据为合成演示,true
+CR028,@pocket_camera_workbench_demo,口袋影像工作台,Bilibili,CN,zh,CN,0.81,vlogging,technology|daily-vlog,comparative-camera-review,478000,329000,0.078,0.67,0.061,0.033,2300,0.97,0.99,0.96,轻量相机与 Vlog 工作流对比完整；评测证据结构清晰；数据为合成演示,true
+CR029,@northwest_solo_map_demo,西北独行地图,Xiaohongshu,CN,zh,CN,0.75,solo-travel,hiking|travel,route-note-storytelling,322000,208000,0.088,0.70,0.055,0.026,1900,0.97,0.99,0.95,独行路线与徒步笔记持续更新；内容兼顾实用性和叙事；数据为合成演示,true
+CR030,@freeski_research_demo,自由滑雪研究所,Bilibili,CN,zh,CN,0.68,skiing,snowboarding|technology,technical-snow-review,418000,294000,0.080,0.69,0.052,0.024,2200,0.96,0.98,0.95,滑雪装备与机位实测内容稳定；长视频过程证据完整；数据为合成演示,true

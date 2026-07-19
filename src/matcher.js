@@ -19,6 +19,7 @@ const REASON_LABELS = Object.freeze({
 });
 
 const MARKET_LANGUAGE = Object.freeze({
+  CN: "zh",
   DE: "de",
   JP: "ja",
   US: "en",
@@ -28,6 +29,19 @@ const MARKET_LANGUAGE = Object.freeze({
   FR: "fr",
   ES: "es",
   KR: "ko",
+});
+
+const MARKET_NAMES = Object.freeze({
+  CN: "中国",
+  DE: "德国",
+  JP: "日本",
+  US: "美国",
+  GB: "英国",
+  AU: "澳大利亚",
+  CA: "加拿大",
+  FR: "法国",
+  ES: "西班牙",
+  KR: "韩国",
 });
 
 const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
@@ -150,7 +164,7 @@ function buildEvidence(creator, campaign, components) {
     {
       type: "audience",
       title: "受众证据",
-      text: `${creator.audience_primary_market} 为第一受众市场，占比 ${formatPercent(creator.audience_market_share)}`,
+      text: `${MARKET_NAMES[creator.audience_primary_market] ?? creator.audience_primary_market}为第一受众市场，占比 ${formatPercent(creator.audience_market_share)}`,
       strength: components.audienceFit,
     },
     {
@@ -212,6 +226,7 @@ export function scoreCreator(rawCreator, campaign, product, weights = DEFAULT_WE
 export function rankCreators(rawCreators, campaign, product, options = {}) {
   const minBrandSafety = options.minBrandSafety ?? 0.78;
   const budgetPerCreator = campaign.budgetPerCreator ?? Number.POSITIVE_INFINITY;
+  const requireMarketMatch = options.requireMarketMatch ?? campaign.market === "CN";
   const ranked = [];
   const excluded = [];
 
@@ -221,6 +236,9 @@ export function rankCreators(rawCreators, campaign, product, options = {}) {
     if ((result.creator.brand_safety ?? 0) < minBrandSafety) reasons.push("品牌安全评分低于阈值");
     if ((result.creator.rate_usd ?? Number.POSITIVE_INFINITY) > budgetPerCreator) reasons.push("报价超过单达人预算");
     if (result.components.sceneFit < 0.35) reasons.push("与目标场景相关度不足");
+    if (requireMarketMatch && result.creator.audience_primary_market !== campaign.market) {
+      reasons.push("主要受众市场不匹配");
+    }
 
     if (reasons.length) excluded.push({ creator: result.creator, reasons });
     else ranked.push(result);
@@ -234,6 +252,22 @@ export function rankCreators(rawCreators, campaign, product, options = {}) {
 }
 
 const LOCALIZED_HOOKS = Object.freeze({
+  zh: {
+    "night-cycling": "夜色这么快，画面能不能跟得上？",
+    "mountain-biking": "一条山地路线，把速度、颠簸和每次转向都完整留下。",
+    hiking: "走进山野，也把每一个视角完整带回来。",
+    skiing: "一趟雪线，一次记录，把每个方向都留住。",
+    diving: "把整次下潜带回来，而不只是一个取景框。",
+    motorcycle: "一路向前，也把沿途每个方向都带回来。",
+    travel: "不打断旅程，也不错过旅程里的每个视角。",
+    "solo-travel": "一个人出发，也能把完整旅程带回来。",
+    "family-travel": "少一点拍摄负担，多留下一点一起出发的真实瞬间。",
+    "city-travel": "穿过一座城，把街角和同行的瞬间都自然留下。",
+    "daily-vlog": "不用停下来摆拍，也能把日常完整记录下来。",
+    running: "专注向前跑，也让轻巧镜头跟上每一步。",
+    vlogging: "少一点设备负担，把注意力留给真正想讲的故事。",
+    default: "把完整经历带回来，而不只是一个取景框。",
+  },
   de: {
     "night-cycling": "Wie viel von deiner Nachtfahrt bleibt wirklich sichtbar?",
     skiing: "Eine Abfahrt. Jeder Blickwinkel. Kein zweiter Versuch.",
@@ -276,7 +310,8 @@ export function buildLocalizedBrief(scoredCreator, campaign, product) {
       `中段：保留 ${creator.content_style} 的原有叙事节奏，展示实际使用过程`,
       `结尾：回到 ${campaign.goal} 目标，以可追踪 CTA 收束`,
     ],
-    complianceNote: "发布前由当地运营核对产品表述、文化语境、音乐与素材版权。",
+    complianceNote: locale === "zh"
+      ? "发布前核对广告标识、产品表述、个人信息授权、音乐素材版权与平台规则；公开演示仅使用合成数据。"
+      : "发布前由当地运营核对产品表述、文化语境、音乐与素材版权。",
   };
 }
-

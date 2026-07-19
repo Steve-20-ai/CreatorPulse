@@ -2,7 +2,7 @@ import { buildLocalizedBrief, rankCreators } from "../src/matcher.js";
 import { creators, products } from "../data/sample-data.js";
 
 const MARKET_LABELS = {
-  DE: "德国 / DE", US: "美国 / US", JP: "日本 / JP", GB: "英国 / GB",
+  CN: "中国 / CN", DE: "德国 / DE", US: "美国 / US", JP: "日本 / JP", GB: "英国 / GB",
   FR: "法国 / FR", AU: "澳大利亚 / AU", KR: "韩国 / KR",
 };
 
@@ -15,7 +15,7 @@ const SCENARIO_LABELS = {
 };
 
 const LANGUAGE_LABELS = {
-  de: "Deutsch", en: "English", ja: "日本語", fr: "Français", ko: "한국어", es: "Español",
+  zh: "中文", de: "Deutsch", en: "English", ja: "日本語", fr: "Français", ko: "한국어", es: "Español",
 };
 
 const state = {
@@ -36,6 +36,7 @@ const elements = {
   confidence: $("#confidenceValue"), detail: $("#detailContent"), productStage: $("#productStage"),
   productBrand: $("#productBrand"), productName: $("#productName"), productCategory: $("#productCategory"),
   productMessage: $("#productMessage"), productImage: $("#productImage"),
+  constraintRules: $("#constraintRules"),
   tabs: [...document.querySelectorAll(".tab-button")], tweaksToggle: $("#tweaksToggle"),
   tweaksPanel: $("#tweaksPanel"), density: $("#densitySelect"), contrast: $("#contrastToggle"),
   toast: $("#toast"),
@@ -58,6 +59,15 @@ function percent(value, digits = 0) {
   return `${((value ?? 0) * 100).toFixed(digits)}%`;
 }
 
+function marketName(code) {
+  return (MARKET_LABELS[code] ?? code).split(" / ")[0];
+}
+
+function updateConstraintRules() {
+  const marketRule = elements.market.value === "CN" ? "主要受众：中国 · " : "";
+  elements.constraintRules.textContent = `${marketRule}品牌安全 ≥ 78% · 预算内 · 场景相关度 ≥ 35%`;
+}
+
 function selectedProduct() {
   return state.products.find((item) => item.product_id === elements.product.value) ?? state.products[0];
 }
@@ -78,7 +88,11 @@ function fillSelect(select, items, valueOf, labelOf, preferred) {
 
 function updateProduct() {
   const product = selectedProduct();
-  fillSelect(elements.market, product.markets, (item) => item, (item) => MARKET_LABELS[item] ?? item, "DE");
+  const preferredMarket = product.markets.includes(elements.market.value)
+    ? elements.market.value
+    : product.markets.includes("CN") ? "CN" : product.markets[0];
+  fillSelect(elements.market, product.markets, (item) => item, (item) => MARKET_LABELS[item] ?? item, preferredMarket);
+  updateConstraintRules();
   fillSelect(elements.scenario, product.scenarios, (item) => item, (item) => SCENARIO_LABELS[item] ?? item, product.scenarios[0]);
   elements.productBrand.textContent = product.brand ?? "Insta360";
   elements.productName.textContent = product.model ?? product.name.replace(/^Insta360\s+/, "");
@@ -139,7 +153,7 @@ function renderRanking() {
     return `<button class="creator-card${item.rank === 1 ? " is-top-match" : ""}${selected ? " is-selected" : ""}" type="button" data-creator-id="${escapeHtml(item.creator.creator_id)}" aria-pressed="${selected}">
       <span class="rank-column"><span class="rank-number">${String(item.rank).padStart(2, "0")}</span>${item.rank === 1 ? '<span class="top-match-badge">TOP</span>' : ""}</span>
       <span class="creator-main"><strong>${escapeHtml(item.creator.display_name)}</strong>
-        <span class="creator-meta"><span>${escapeHtml(item.creator.platform)}</span><span>${escapeHtml(item.creator.country)}</span><span>${compact(item.creator.avg_views)} avg.</span></span>
+        <span class="creator-meta"><span>${escapeHtml(item.creator.platform)}</span><span>主要受众：${escapeHtml(marketName(item.creator.audience_primary_market))}</span><span>${compact(item.creator.avg_views)} avg.</span></span>
         <span class="match-tags">${matchTags.map((tag) => `<span>${escapeHtml(tag)}</span>`).join("")}</span>
       </span>
       <span class="score-block"><strong>${item.score}</strong><span>匹配度</span><span class="score-bar"><i style="width:${item.score}%"></i></span></span>
@@ -238,6 +252,7 @@ async function runMatching({ announce = true } = {}) {
 function bindEvents() {
   elements.form.addEventListener("submit", (event) => { event.preventDefault(); runMatching(); });
   elements.product.addEventListener("change", () => { updateProduct(); runMatching({ announce: false }); });
+  elements.market.addEventListener("change", updateConstraintRules);
   elements.budget.addEventListener("input", updateBudget);
   elements.tabs.forEach((button) => button.addEventListener("click", () => {
     state.activeTab = button.dataset.tab;

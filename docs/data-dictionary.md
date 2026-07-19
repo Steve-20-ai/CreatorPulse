@@ -9,7 +9,7 @@
 | `creator_id` | string | `CR001` | 内部匿名标识 |
 | `handle` | string | `@lena_nightride_demo` | 合成账号名，统一带 `_demo` |
 | `display_name` | string | `Lena Night Ride` | 展示名称 |
-| `platform` | enum | `YouTube` | 演示平台 |
+| `platform` | enum | `YouTube` | 演示平台，包括 YouTube、Douyin、Bilibili、Xiaohongshu 等 |
 | `country` | ISO code | `DE` | 达人所在国家 |
 | `language` | ISO code | `de` | 主要内容语言 |
 | `audience_primary_market` | ISO code | `DE` | 受众第一市场 |
@@ -52,4 +52,6 @@
 
 - 缺失字段不会被填入虚构值，而是降低推荐置信度。
 - 合成数据的置信度上限低于生产授权数据。
+- 中国市场记录与海外记录使用相同的数据契约，但按平台、语言与合规边界分别解释。当前含 12 条中国合成记录，抖音、B站、小红书各 4 条。
+- 中国市场默认以 `audience_primary_market = CN` 作为硬筛选条件；`country` 表示达人所在市场，不代替受众证据。
 - 生产环境中的个人数据需满足目的限定、最小必要、留存期限和访问审计要求。
